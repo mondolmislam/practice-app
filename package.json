@@ -9,10 +9,11 @@
   "private": false,
   "scripts": {
     "start": "node index.js",
+    "test": "node __test__/initialize_database.js && mocha --recursive --exit",
     "postinstall": "yarn build",
     "dev": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "front-test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "makedb": "docker run -p 127.0.0.1:5432:5432 --name mydb -e POSTGRES_USER=ms -d postgres",
     "psql": "docker run -it --rm --link mydb:postgres postgres psql -h postgres -U ms",
@@ -28,10 +29,12 @@
     "react-scripts": "1.1.4"
   },
   "devDependencies": {
+    "chai": "^4.1.2",
     "eslint": "^4.9.0",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^6.0.2",
-    "eslint-plugin-react": "^7.4.0"
+    "eslint-plugin-react": "^7.4.0",
+    "mocha": "^5.2.0"
   }
 }
