@@ -16,6 +16,10 @@ const userSeeds = [{
   address: 'singapore',
 }];
 
+const forcePromiseReject = () => {
+  throw new Error('The test case should causes error, but did not.');
+};
+
 describe('#user', function() {
   describe('#setup', function() {
     it('has run the initial migration', async function() {
@@ -32,7 +36,7 @@ describe('#user', function() {
             address: '',
           });
 
-
+          forcePromiseReject();
         } catch (error) {
           expect(error.message).to.equal(messages.inputError);
         }
