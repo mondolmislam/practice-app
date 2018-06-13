@@ -19,7 +19,7 @@ const userSeeds = [{
 describe('#user', function() {
   describe('#setup', function() {
     it('has run the initial migration', async function() {
-      return knex(TABLENAME).select().catch(err => throw err);
+      return knex(TABLENAME).select().catch(err => console.error(err));
     });
   });
 
