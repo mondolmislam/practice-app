@@ -1,6 +1,7 @@
 const createUsers = require('./createUsers');
 const listUsers = require('./listUsers');
 
+const TABLENAME = 'Users';
 class User {
   constructor(userData) {
     this.user = userData;
@@ -10,11 +11,11 @@ class User {
     return {
       userId: this.user.user_id,
       name: this.user.name,
-    }
+    };
   }
 }
 
 module.exports = knex => ({
-  createUsers: createUsers(knex),
-  listUsers: listUsers(knex, User),
+  createUsers: createUsers(knex, TABLENAME),
+  listUsers: listUsers(knex, User, TABLENAME),
 });

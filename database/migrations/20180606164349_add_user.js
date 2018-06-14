@@ -1,7 +1,9 @@
-const TABLENAME = 'users';
+const TABLENAME = 'Users';
 
 exports.up = knex => knex.schema.createTable(TABLENAME, (table) => {
-  // TODO: you need to implement create table feature!
+  table.increments();
+  table.string('name').notNullable();
+  table.string('address').notNullable();
 });
 
 exports.down = knex => knex.schema.dropTable(TABLENAME);
