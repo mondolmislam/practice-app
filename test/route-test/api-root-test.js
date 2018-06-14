@@ -1,15 +1,11 @@
 const chai = require('chai');
 const { expect } = require('chai');
 const chaiHttp = require('chai-http');
-const Knex = require('knex');
 
 const app = require('../../app');
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server is starting on PORT ${PORT}`));
 chai.use(chaiHttp);
-
-const knexConfig = require('../../database/knexfile');
-const knex = Knex(knexConfig);
 
 describe('Server routing', function() {
   describe('#ALL method for /api', function() {
@@ -17,7 +13,7 @@ describe('Server routing', function() {
 
     before(async function() {
       try {
-        response = await chai.request(app).get('api');
+        response = await chai.request(app).get('/api');
       } catch (error) {
         throw error;
       }
