@@ -20,14 +20,14 @@ const forcePromiseReject = () => {
   throw new Error('The test case should causes error, but did not.');
 };
 
-describe('#user', function() {
-  describe('#setup', function() {
-    it('has run the initial migration', async function() {
+describe('#user', function () {
+  describe('#setup', function () {
+    it('has run the initial migration', async function () {
       return knex(TABLENAME).select().catch(err => console.error(err));
     });
   });
 
-  describe('#insert', function() {
+  describe('#insert', function () {
     context('if bad params are given', function () {
       it('politely refused', async function () {
         try {
@@ -36,6 +36,7 @@ describe('#user', function() {
             address: '',
           });
 
+          console.log(result);
           forcePromiseReject();
         } catch (error) {
           expect(error.message).to.equal(messages.inputError);
@@ -43,8 +44,8 @@ describe('#user', function() {
       });
     });
 
-    context('if good params are given', function() {
-      afterEach(async function() {
+    context('if good params are given', function () {
+      afterEach(async function () {
         try {
           await knex(TABLENAME).delete();
         } catch (error) {
@@ -52,12 +53,12 @@ describe('#user', function() {
         }
       });
 
-      it('successfully insert a data', async function() {
+      it('successfully insert a data', async function () {
         try {
           const result = await database.users.createUsers(userSeeds);
-          
+
           expect(result.length).to.equal(2);
-          userSeeds.forEach((eachUser, index) => Object.keys(eachUser).forEach(eachKey => {
+          userSeeds.forEach((eachUser, index) => Object.keys(eachUser).forEach((eachKey) => {
             expect(result[index][eachKey]).to.equal(eachUser[eachKey]);
           }));
         } catch (error) {
@@ -67,11 +68,11 @@ describe('#user', function() {
     });
   });
 
-  describe('#select', function() {
-    before(async function() {
+  describe('#select', function () {
+    before(async function () {
       try {
         const result = knex(TABLENAME).insert(userSeeds).returning('*');
-        
+
         if (result.length !== 2) {
           throw new Error('Inserting two records has some problems.');
         }
@@ -80,14 +81,14 @@ describe('#user', function() {
       }
     });
 
-    context('if data exist', function() {
-      it('you can get data', async function() {
+    context('if data exist', function () {
+      it('you can get data', async function () {
         try {
           const result = await database.users.listUsers();
 
           expect(result.exist).to.be.true;
           expect(result.data.length).to.equal(2);
-          userSeeds.forEach((eachSeed, index) => Object.keys(eachSeed).forEach(eachKey => {
+          userSeeds.forEach((eachSeed, index) => Object.keys(eachSeed).forEach((eachKey) => {
             expect(result.data[index][eachKey]).to.equal(eachSeed[eachKey]);
           }));
         } catch (error) {
@@ -96,16 +97,16 @@ describe('#user', function() {
       });
     });
 
-    context('if data doesnt exist', function() {
-      before(async function() {
+    context('if data doesnt exist', function () {
+      before(async function () {
         try {
           await knex(TABLENAME).delete();
         } catch (error) {
           throw error;
         }
       });
-    
-      it('you cannot get data', async function() {
+
+      it('you cannot get data', async function () {
         try {
           const result = await database.users.listUsers();
 
