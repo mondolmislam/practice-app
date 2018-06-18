@@ -15,10 +15,8 @@
     "build": "react-scripts build",
     "front-test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "makedb": "docker run -p 127.0.0.1:5432:5432 --name mydb -e POSTGRES_USER=ms -d postgres",
     "migrate": "./node_modules/knex/bin/cli.js migrate:latest --knexfile ./database/knexfile.js",
     "rollback": "./node_modules/knex/bin/cli.js migrate:rollback --knexfile ./database/knexfile.js",
-    "psql": "docker run -it --rm --link mydb:postgres postgres psql -h postgres -U ms",
     "startdb": "docker start mydb",
     "stopdb": "docker stop mydb"
   },

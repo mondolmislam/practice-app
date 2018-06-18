@@ -31,12 +31,11 @@ describe('#user', function () {
     context('if bad params are given', function () {
       it('politely refused', async function () {
         try {
-          const result = await database.users.createUsers({
+          await database.users.createUsers({
             name: '',
             address: '',
           });
 
-          console.log(result);
           forcePromiseReject();
         } catch (error) {
           expect(error.message).to.equal(messages.inputError);
@@ -71,7 +70,7 @@ describe('#user', function () {
   describe('#select', function () {
     before(async function () {
       try {
-        const result = knex(TABLENAME).insert(userSeeds).returning('*');
+        const result = await knex(TABLENAME).insert(userSeeds).returning('*');
 
         if (result.length !== 2) {
           throw new Error('Inserting two records has some problems.');
