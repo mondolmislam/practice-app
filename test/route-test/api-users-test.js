@@ -1,6 +1,6 @@
 const chai = require('chai');
-const { expect } = require('chai');
 const chaiHttp = require('chai-http');
+const { expect } = require('chai');
 const Knex = require('knex');
 
 const app = require('../../app');
@@ -11,8 +11,6 @@ app.listen(PORT, () => console.log(`Server is starting on PORT ${PORT}`));
 chai.use(chaiHttp);
 
 const knex = Knex(knexConfig);
-
-const database = require('../../database/index');
 
 const seeds = [{
   name: 'test',
@@ -43,7 +41,7 @@ describe('Server routing', function () {
       try {
         const responseData = response.body;
 
-        responseData.forEach((eachData, index) => Object.keys(seeds).forEach((eachKey) => {
+        responseData.forEach((eachData, index) => Object.keys(seeds[0]).forEach((eachKey) => {
           expect(eachData[eachKey]).to.equal(seeds[index][eachKey]);
         }));
       } catch (error) {
@@ -69,8 +67,10 @@ describe('Server routing', function () {
       });
 
       it('should return data', function () {
-        seeds.forEach((eachSeed, index) => Object.keys(eachSeed).forEach((eachKey) => {
-          expect(response.body[index][eachKey]).to.equal(eachSeed[eachKey]);
+        const responseData = response.body;
+
+        responseData.forEach((eachData, index) => Object.keys(seeds[0]).forEach((eachKey) => {
+          expect(eachData[eachKey]).to.equal(seeds[index][eachKey]);
         }));
       });
     });
