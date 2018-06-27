@@ -41,10 +41,10 @@ describe('Server routing', function () {
 
     it('should post data', async function () {
       try {
-        const databaseResult = await database.users.listUsers();
+        const responseData = response.body;
 
-        seeds.forEach((eachSeed, index) => Object.keys(eachSeed).forEach((eachKey) => {
-          expect(databaseResult[index][eachKey]).to.equal(eachSeed[eachKey]);
+        responseData.forEach((eachData, index) => Object.keys(seeds).forEach((eachKey) => {
+          expect(eachData[eachKey]).to.equal(seeds[index][eachKey]);
         }));
       } catch (error) {
         throw error;
