@@ -9,8 +9,7 @@
   "private": false,
   "scripts": {
     "start": "node index.js",
-    "test": "node __test__/initialize_database.js && mocha --recursive --exit",
-    "postinstall": "yarn build",
+    "test": "jest",
     "dev": "react-scripts start",
     "build": "react-scripts build",
     "front-test": "react-scripts test --env=jsdom",
