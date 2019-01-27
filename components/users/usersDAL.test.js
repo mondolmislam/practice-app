@@ -1,11 +1,8 @@
-const { expect } = require('chai');
-const Knex = require('knex');
+// This test is meant for testing user.js and User.js
 
-const database = require('../../database/index');
-const knexConfig = require('../../database/knexfile');
-const messages = require('../../config/messages');
-
-const knex = Knex(knexConfig);
+const { knex } = require('../../middleware');
+const { message } = require('../../constants');
+const User = require('./user');
 
 const TABLENAME = 'Users';
 const userSeeds = [{
@@ -20,31 +17,30 @@ const forcePromiseReject = () => {
   throw new Error('The test case should causes error, but did not.');
 };
 
-describe('#user', function () {
-  describe('#setup', function () {
-    it('has run the initial migration', async function () {
-      return knex(TABLENAME).select().catch(err => console.error(err));
-    });
+describe('#user', () => {
+  describe('#setup', () => {
+    it('has run the initial migration',
+      async () => knex(TABLENAME).select().catch(err => console.error(err)));
   });
 
-  describe('#insert', function () {
-    context('if bad params are given', function () {
-      it('politely refused', async function () {
+  describe('#insert', () => {
+    describe('if bad params are given', () => {
+      it('politely refused', async () => {
         try {
-          await database.users.createUsers({
+          await User.insert({
             name: '',
             address: '',
           });
 
           forcePromiseReject();
         } catch (error) {
-          expect(error.message).to.equal(messages.inputError);
+          expect(error.message).toBe(message.inputError);
         }
       });
     });
 
-    context('if good params are given', function () {
-      afterEach(async function () {
+    describe('if good params are given', () => {
+      afterEach(async () => {
         try {
           await knex(TABLENAME).delete();
         } catch (error) {
@@ -52,11 +48,11 @@ describe('#user', function () {
         }
       });
 
-      it('successfully insert a data', async function () {
+      it('successfully insert a data', async () => {
         try {
-          const result = await database.users.createUsers(userSeeds);
+          const result = await User.insert(userSeeds);
 
-          expect(result.length).to.equal(2);
+          expect(result.length).toBe(2);
           userSeeds.forEach((eachUser, index) => Object.keys(eachUser).forEach((eachKey) => {
             expect(result[index][eachKey]).to.equal(eachUser[eachKey]);
           }));
@@ -67,8 +63,8 @@ describe('#user', function () {
     });
   });
 
-  describe('#select', function () {
-    before(async function () {
+  describe('#select', () => {
+    beforeAll(async () => {
       try {
         const result = await knex(TABLENAME).insert(userSeeds).returning('*');
 
@@ -80,13 +76,13 @@ describe('#user', function () {
       }
     });
 
-    context('if data exist', function () {
-      it('you can get data', async function () {
+    describe('if data exist', () => {
+      it('you can get data', async () => {
         try {
-          const result = await database.users.listUsers();
+          const result = await User.listUsers();
 
-          expect(result.exist).to.be.true;
-          expect(result.data.length).to.equal(2);
+          expect(result.exist).toBe(true);
+          expect(result.data.length).toBe(2);
           userSeeds.forEach((eachSeed, index) => Object.keys(eachSeed).forEach((eachKey) => {
             expect(result.data[index][eachKey]).to.equal(eachSeed[eachKey]);
           }));
@@ -96,8 +92,8 @@ describe('#user', function () {
       });
     });
 
-    context('if data doesnt exist', function () {
-      before(async function () {
+    describe('if data doesnt exist', () => {
+      beforeAll(async () => {
         try {
           await knex(TABLENAME).delete();
         } catch (error) {
@@ -105,11 +101,11 @@ describe('#user', function () {
         }
       });
 
-      it('you cannot get data', async function () {
+      it('you cannot get data', async () => {
         try {
-          const result = await database.users.listUsers();
+          const result = await User.listUsers();
 
-          expect(result.exist).to.be.false;
+          expect(result.exist).toBe(false);
           expect(result.data.length).to.equal(0);
         } catch (error) {
           throw error;

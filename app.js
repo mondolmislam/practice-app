@@ -1,12 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const router = require('./route/index');
+const apiRouter = require('./components/rootAPI');
 
 const app = express();
 app.use(bodyParser.json());
-app.use('/api', router);
+app.use('/api', apiRouter);
 
 // TODO: you need to implement server routing!!
 
-module.exports = app;
+module.exports.app = app;

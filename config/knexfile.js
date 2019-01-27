@@ -1,4 +1,4 @@
-module.exports = {
+module.exports.knexConfig = {
   client: 'pg',
   connection: process.env.DATABASE_URL || 'postgresql:localhost:5432/practice',
   pool: {
