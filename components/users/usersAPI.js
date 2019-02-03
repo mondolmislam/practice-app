@@ -19,9 +19,14 @@ router.post('/',async (req, res) => {
   }
 });
 
-router.get('/', (req, res) => {
+router.get('/',async(req, res) =>{
   // TODO: you need to get the data using database!
   // TODO: you need to send the response using express!
+    let userList =  await User.User.select();
+    res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.send(userList);
+    
 });
 
 module.exports.usersAPI = router;
