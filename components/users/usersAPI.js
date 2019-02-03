@@ -1,6 +1,7 @@
 const express = require('express');
 
 const router = express.Router();
+const User = require('./user.js');
 
 router.post('/',async (req, res) => {
   // TODO: you need to store the data using database!
