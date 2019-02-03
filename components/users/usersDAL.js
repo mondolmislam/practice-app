@@ -8,12 +8,16 @@ module.exports.insert = async (userData) => {
     if (!checkInputError(userData)) {
       throw new Error(message.inputError);
     }
-let result = knex('Users').insert(userData);
+   let result = knex('Users').insert(userData);
     // TODO: you need to implement inserting method with knex.js
     return result;
   } catch (error) {
     throw error;
   }
+};
+
+module.exports.listUsers = async ()=> {
+  return  knex.select('*').from('Users');
 };
 
 // TODO: you need to implement the select command!!
