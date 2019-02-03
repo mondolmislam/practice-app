@@ -8,7 +8,7 @@ module.exports.insert = async (userData) => {
     if (!checkInputError(userData)) {
       throw new Error(message.inputError);
     }
-
+let result = knex('Users').insert(userData);
     // TODO: you need to implement inserting method with knex.js
     return result;
   } catch (error) {
