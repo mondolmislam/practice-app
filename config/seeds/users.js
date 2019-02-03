@@ -3,12 +3,15 @@ const tableName = 'users';
 // TODO: you need to add some data.
 exports.seed = knex => knex(tableName).del().then(() => knex(tableName).insert([
   {
-    name: 'test',
+    name: 'Md. Maidul Islam',
+    address: 'Nikunja2, khilket, dhaka, bangladesh'
   },
   {
-    name: 'test2',
+     name: 'Md. Moshiur Rahman',
+    address: 'Nikunja2, khilket, dhaka, bangladesh'
   },
   {
-    name: 'test3',
+     name: 'Md. Jone',
+    address: 'London, England'
   },
 ]));
