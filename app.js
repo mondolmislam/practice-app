@@ -5,7 +5,8 @@ const apiRouter = require('./components/rootAPI');
 
 const app = express();
 app.use(bodyParser.json());
-app.use('/api', apiRouter);
+
+app.use('/api', apiRouter());
 
 // TODO: you need to implement server routing!!
 
